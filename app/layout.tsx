@@ -63,7 +63,7 @@ export default function RootLayout({
               rel="noreferrer"
               className="font-medium text-blue-600 underline-offset-4 hover:underline"
             >
-              Repositorio en GitHub
+              GitHub Repository
             </a>
           </div>
         </footer>
