@@ -1,8 +1,16 @@
-// Client-safe dictionary fetcher for use in Client Components
+/**
+ * Supported locales available to client-side consumers.
+ */
 export const locales = ["en-US", "es-MX"] as const;
 
+/**
+ * Union type for supported locale identifiers.
+ */
 export type Locale = (typeof locales)[number];
 
+/**
+ * Client-safe translation dictionary used by localized UI components.
+ */
 export type Dictionary = {
   metadata: {
     title: string;
@@ -34,6 +42,9 @@ export type Dictionary = {
   };
 };
 
+/**
+ * In-memory dictionary catalog for client-side localized content.
+ */
 const dictionaries: Record<Locale, Dictionary> = {
   "en-US": {
     metadata: {
@@ -70,7 +81,7 @@ const dictionaries: Record<Locale, Dictionary> = {
   },
   "es-MX": {
     metadata: {
-      title: "Aplicación de Películas",
+      title: "Movies Application",
       description: "Frontend de películas con soporte para inglés y español.",
     },
     layout: {
@@ -86,7 +97,7 @@ const dictionaries: Record<Locale, Dictionary> = {
       },
     },
     home: {
-      eyebrow: "Aplicación de Películas",
+      eyebrow: "Movies Application",
       title: "Lista de Películas",
       subtitle: "Vista previa estática con datos dummy para la pantalla principal.",
       createMovie: "Agregar Película",
@@ -103,7 +114,13 @@ const dictionaries: Record<Locale, Dictionary> = {
   },
 };
 
-/** Get dictionary for client-side use. Safe for Client Components. */
+/**
+ * Get the translation dictionary for a supported locale.
+ * Safe for use inside Client Components.
+ *
+ * @param locale Locale code to resolve.
+ * @returns Translation dictionary for the requested locale.
+ */
 export async function getClientDictionary(locale: Locale): Promise<Dictionary> {
   return dictionaries[locale];
 }

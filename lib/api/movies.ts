@@ -1,7 +1,10 @@
 import axios, { AxiosInstance, AxiosError } from "axios";
 import type { Movie } from "@/types/movie";
 
-// Configure Axios instance
+/**
+ * Shared Axios client for Movies API requests.
+ * Uses the public API base URL configured through environment variables.
+ */
 const apiClient: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   timeout: 5000,
@@ -65,4 +68,7 @@ export async function createMovie(
   }
 }
 
+/**
+ * Default configured Movies API client.
+ */
 export default apiClient;
