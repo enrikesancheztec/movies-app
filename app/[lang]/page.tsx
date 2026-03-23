@@ -186,7 +186,6 @@ export default function Home({
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
             {dict.home.title}
           </h1>
-          <p className="text-sm text-slate-600">{dict.home.subtitle}</p>
         </div>
 
         <button
@@ -203,10 +202,6 @@ export default function Home({
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         <div className="border-b border-slate-200 px-5 py-4 sm:px-6">
           <h2 className="text-lg font-semibold text-slate-900">{dict.home.featuredTitle}</h2>
-          <p className="mt-1 text-sm text-slate-500">{dict.home.featuredSubtitle}</p>
-          <p className="mt-2 text-xs font-medium uppercase tracking-[0.14em] text-slate-400">
-            {dict.home.responsiveHint}
-          </p>
         </div>
 
         {renderContent()}
