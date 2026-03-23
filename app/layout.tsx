@@ -27,7 +27,47 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-slate-100 text-slate-900">
+        <header className="border-b border-slate-300 bg-blue-600 text-white shadow-sm">
+          <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3">
+            <button
+              type="button"
+              aria-label="Open menu"
+              className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded border border-white/40 bg-white/10 transition hover:bg-white/20"
+            >
+              <span className="h-0.5 w-5 bg-white" />
+              <span className="h-0.5 w-5 bg-white" />
+              <span className="h-0.5 w-5 bg-white" />
+            </button>
+
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-medium">Usuario: John Doe</span>
+              <button
+                type="button"
+                className="rounded border border-white/40 px-3 py-1.5 text-sm font-medium transition hover:bg-white/20"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">{children}</main>
+
+        <footer className="border-t border-slate-300 bg-white">
+          <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 py-4 text-sm text-slate-700 sm:flex-row sm:items-center sm:justify-between">
+            <p>Copyright 2026 Kikesoft</p>
+            <a
+              href="https://github.com/enrikesancheztec/movies-app"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium text-blue-600 underline-offset-4 hover:underline"
+            >
+              Repositorio en GitHub
+            </a>
+          </div>
+        </footer>
+      </body>
     </html>
   );
 }
