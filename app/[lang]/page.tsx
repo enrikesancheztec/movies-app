@@ -1,12 +1,48 @@
 import { notFound } from "next/navigation";
 import { getDictionary, hasLocale } from "./dictionaries";
+import type { Movie } from "@/types/movie";
 
-const movies = [
-  { id: 1, title: "The Godfather", year: 1972 },
-  { id: 2, title: "Pulp Fiction", year: 1994 },
-  { id: 3, title: "The Dark Knight", year: 2008 },
-  { id: 4, title: "Inception", year: 2010 },
-  { id: 5, title: "Interstellar", year: 2014 },
+const movies: Movie[] = [
+  {
+    id: 1,
+    name: "The Godfather",
+    launchDate: "1972-03-24",
+    duration: 175,
+    rating: "R",
+    description: "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant youngest son."
+  },
+  {
+    id: 2,
+    name: "Pulp Fiction",
+    launchDate: "1994-10-14",
+    duration: 154,
+    rating: "R",
+    description: "The lives of two mob hitmen, a boxer, a gangster and his wife intertwine in four tales of violence and redemption."
+  },
+  {
+    id: 3,
+    name: "The Dark Knight",
+    launchDate: "2008-07-18",
+    duration: 152,
+    rating: "PG_13",
+    description: "When the menace known as the Joker wreaks havoc on Gotham, Batman must accept one of the greatest psychological and physical tests."
+  },
+  {
+    id: 4,
+    name: "Inception",
+    launchDate: "2010-07-16",
+    duration: 148,
+    rating: "PG_13",
+    description: "A skilled thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea."
+  },
+  {
+    id: 5,
+    name: "Interstellar",
+    launchDate: "2014-11-07",
+    duration: 169,
+    rating: "PG_13",
+    description: "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival."
+  }
 ];
 
 function PlusIcon() {
@@ -88,7 +124,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
                   {dict.home.movieColumn}
                 </p>
-                <h3 className="text-base font-semibold text-slate-900">{movie.title}</h3>
+                <h3 className="text-base font-semibold text-slate-900">{movie.name}</h3>
               </div>
 
               <div className="mt-4 flex items-end justify-between gap-4">
@@ -96,13 +132,13 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
                     {dict.home.yearColumn}
                   </p>
-                  <p className="mt-1 text-sm text-slate-700">{movie.year}</p>
+                  <p className="mt-1 text-sm text-slate-700">{new Date(movie.launchDate).getFullYear()}</p>
                 </div>
 
                 <button
                   type="button"
-                  title={`${dict.home.detailsTooltip} ${movie.title}`}
-                  aria-label={`${dict.home.detailsTooltip} ${movie.title}`}
+                  title={`${dict.home.detailsTooltip} ${movie.name}`}
+                  aria-label={`${dict.home.detailsTooltip} ${movie.name}`}
                   className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-blue-300 hover:text-blue-600"
                 >
                   <EyeIcon />
@@ -133,16 +169,16 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
               {movies.map((movie) => (
                 <tr key={movie.id} className="transition hover:bg-slate-50/80">
                   <td className="px-4 py-3 text-sm font-medium text-slate-900 lg:px-6 lg:py-4 xl:text-base">
-                    {movie.title}
+                    {movie.name}
                   </td>
                   <td className="px-4 py-3 text-sm text-slate-600 lg:px-6 lg:py-4 xl:text-base">
-                    {movie.year}
+                    {new Date(movie.launchDate).getFullYear()}
                   </td>
                   <td className="px-4 py-3 text-right lg:px-6 lg:py-4">
                     <button
                       type="button"
-                      title={`${dict.home.detailsTooltip} ${movie.title}`}
-                      aria-label={`${dict.home.detailsTooltip} ${movie.title}`}
+                      title={`${dict.home.detailsTooltip} ${movie.name}`}
+                      aria-label={`${dict.home.detailsTooltip} ${movie.name}`}
                       className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-blue-300 hover:text-blue-600 xl:px-4"
                     >
                       <EyeIcon />
