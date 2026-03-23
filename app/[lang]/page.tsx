@@ -1,3 +1,6 @@
+import { notFound } from "next/navigation";
+import { getDictionary, hasLocale } from "./dictionaries";
+
 const movies = [
   { id: 1, title: "The Godfather", year: 1972 },
   { id: 2, title: "Pulp Fiction", year: 1994 },
@@ -33,39 +36,45 @@ function EyeIcon() {
   );
 }
 
-export default function Home() {
+export default async function Home({ params }: PageProps<"/[lang]">) {
+  const { lang } = await params;
+
+  if (!hasLocale(lang)) {
+    notFound();
+  }
+
+  const dict = await getDictionary(lang);
+
   return (
     <section className="space-y-6">
       <div className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6 lg:flex-row lg:items-center lg:justify-between">
         <div className="space-y-1">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600">
-            Movies Dashboard
+            {dict.home.eyebrow}
           </p>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-            Movie List
+            {dict.home.title}
           </h1>
-          <p className="text-sm text-slate-600">
-            Static preview with dummy data for the home screen.
-          </p>
+          <p className="text-sm text-slate-600">{dict.home.subtitle}</p>
         </div>
 
         <button
           type="button"
-          title="Create a new movie"
-          aria-label="Create a new movie"
+          title={dict.home.createMovieTooltip}
+          aria-label={dict.home.createMovieTooltip}
           className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 sm:w-auto"
         >
           <PlusIcon />
-          <span>Create Movie</span>
+          <span>{dict.home.createMovie}</span>
         </button>
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         <div className="border-b border-slate-200 px-5 py-4 sm:px-6">
-          <h2 className="text-lg font-semibold text-slate-900">Featured Titles</h2>
-          <p className="mt-1 text-sm text-slate-500">Showing 5 demo records.</p>
+          <h2 className="text-lg font-semibold text-slate-900">{dict.home.featuredTitle}</h2>
+          <p className="mt-1 text-sm text-slate-500">{dict.home.featuredSubtitle}</p>
           <p className="mt-2 text-xs font-medium uppercase tracking-[0.14em] text-slate-400">
-            Mobile: stacked cards | Laptop: compact table | Desktop: spacious table
+            {dict.home.responsiveHint}
           </p>
         </div>
 
@@ -77,7 +86,7 @@ export default function Home() {
             >
               <div className="space-y-1">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
-                  Movie
+                  {dict.home.movieColumn}
                 </p>
                 <h3 className="text-base font-semibold text-slate-900">{movie.title}</h3>
               </div>
@@ -85,19 +94,19 @@ export default function Home() {
               <div className="mt-4 flex items-end justify-between gap-4">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
-                    Release Year
+                    {dict.home.yearColumn}
                   </p>
                   <p className="mt-1 text-sm text-slate-700">{movie.year}</p>
                 </div>
 
                 <button
                   type="button"
-                  title={`View details for ${movie.title}`}
-                  aria-label={`View details for ${movie.title}`}
+                  title={`${dict.home.detailsTooltip} ${movie.title}`}
+                  aria-label={`${dict.home.detailsTooltip} ${movie.title}`}
                   className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-blue-300 hover:text-blue-600"
                 >
                   <EyeIcon />
-                  <span>View Details</span>
+                  <span>{dict.home.detailsAction}</span>
                 </button>
               </div>
             </article>
@@ -109,13 +118,13 @@ export default function Home() {
             <thead className="bg-slate-50">
               <tr>
                 <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 lg:px-6 xl:py-4">
-                  Movie
+                  {dict.home.movieColumn}
                 </th>
                 <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 lg:px-6 xl:py-4">
-                  Release Year
+                  {dict.home.yearColumn}
                 </th>
                 <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 lg:px-6 xl:py-4">
-                  Action
+                  {dict.home.actionColumn}
                 </th>
               </tr>
             </thead>
@@ -132,12 +141,12 @@ export default function Home() {
                   <td className="px-4 py-3 text-right lg:px-6 lg:py-4">
                     <button
                       type="button"
-                      title={`View details for ${movie.title}`}
-                      aria-label={`View details for ${movie.title}`}
+                      title={`${dict.home.detailsTooltip} ${movie.title}`}
+                      aria-label={`${dict.home.detailsTooltip} ${movie.title}`}
                       className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-blue-300 hover:text-blue-600 xl:px-4"
                     >
                       <EyeIcon />
-                      <span>View Details</span>
+                      <span>{dict.home.detailsAction}</span>
                     </button>
                   </td>
                 </tr>
