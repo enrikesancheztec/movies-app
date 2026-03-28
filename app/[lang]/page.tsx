@@ -1,49 +1,8 @@
-import { notFound } from "next/navigation";
-import { getDictionary, hasLocale } from "./dictionaries";
-import type { Movie } from "@/types/movie";
+"use client";
 
-const movies: Movie[] = [
-  {
-    id: 1,
-    name: "The Godfather",
-    launchDate: "1972-03-24",
-    duration: 175,
-    rating: "R",
-    description: "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant youngest son."
-  },
-  {
-    id: 2,
-    name: "Pulp Fiction",
-    launchDate: "1994-10-14",
-    duration: 154,
-    rating: "R",
-    description: "The lives of two mob hitmen, a boxer, a gangster and his wife intertwine in four tales of violence and redemption."
-  },
-  {
-    id: 3,
-    name: "The Dark Knight",
-    launchDate: "2008-07-18",
-    duration: 152,
-    rating: "PG_13",
-    description: "When the menace known as the Joker wreaks havoc on Gotham, Batman must accept one of the greatest psychological and physical tests."
-  },
-  {
-    id: 4,
-    name: "Inception",
-    launchDate: "2010-07-16",
-    duration: 148,
-    rating: "PG_13",
-    description: "A skilled thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea."
-  },
-  {
-    id: 5,
-    name: "Interstellar",
-    launchDate: "2014-11-07",
-    duration: 169,
-    rating: "PG_13",
-    description: "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival."
-  }
-];
+import { getClientDictionary, locales } from "@/lib/client-dictionaries";
+import { useMovies } from "@/hooks/useMovies";
+import { use, useEffect, useState } from "react";
 
 function PlusIcon() {
   return (
@@ -72,48 +31,71 @@ function EyeIcon() {
   );
 }
 
-export default async function Home({ params }: PageProps<"/[lang]">) {
-  const { lang } = await params;
+function LoadingSpinner() {
+  return (
+    <div className="flex items-center justify-center py-12">
+      <div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-blue-600"></div>
+    </div>
+  );
+}
 
-  if (!hasLocale(lang)) {
-    notFound();
+export default function Home({
+  params,
+}: {
+  readonly params: Promise<{ readonly lang: string }>;
+}) {
+  const { lang } = use(params);
+  const [dict, setDict] = useState<any>(null);
+  const [dictError, setDictError] = useState(false);
+  const { movies, loading, error } = useMovies();
+
+  useEffect(() => {
+    // Load dictionary on client side
+    if (!locales.includes(lang as any)) {
+      setDictError(true);
+      return;
+    }
+
+    getClientDictionary(lang as "en-US" | "es-MX").then((d) => {
+      setDict(d);
+    });
+  }, [lang]);
+
+  if (dictError) {
+    return (
+      <section className="space-y-6">
+        <div className="text-center py-12">
+          <p className="text-sm font-medium text-red-600">Invalid language</p>
+        </div>
+      </section>
+    );
   }
 
-  const dict = await getDictionary(lang);
+  if (!dict) {
+    return (
+      <section className="space-y-6">
+        <LoadingSpinner />
+      </section>
+    );
+  }
 
-  return (
-    <section className="space-y-6">
-      <div className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6 lg:flex-row lg:items-center lg:justify-between">
-        <div className="space-y-1">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600">
-            {dict.home.eyebrow}
-          </p>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-            {dict.home.title}
-          </h1>
-          <p className="text-sm text-slate-600">{dict.home.subtitle}</p>
-        </div>
+  const renderContent = () => {
+    if (loading) {
+      return <LoadingSpinner />;
+    }
 
-        <button
-          type="button"
-          title={dict.home.createMovieTooltip}
-          aria-label={dict.home.createMovieTooltip}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 sm:w-auto"
-        >
-          <PlusIcon />
-          <span>{dict.home.createMovie}</span>
-        </button>
-      </div>
-
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <div className="border-b border-slate-200 px-5 py-4 sm:px-6">
-          <h2 className="text-lg font-semibold text-slate-900">{dict.home.featuredTitle}</h2>
-          <p className="mt-1 text-sm text-slate-500">{dict.home.featuredSubtitle}</p>
-          <p className="mt-2 text-xs font-medium uppercase tracking-[0.14em] text-slate-400">
-            {dict.home.responsiveHint}
+    if (error) {
+      return (
+        <div className="px-5 py-8 text-center">
+          <p className="text-sm font-medium text-red-600">
+            Error loading movies: {error.message}
           </p>
         </div>
+      );
+    }
 
+    return (
+      <>
         <div className="grid gap-4 p-4 md:hidden">
           {movies.map((movie) => (
             <article
@@ -190,6 +172,39 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             </tbody>
           </table>
         </div>
+      </>
+    );
+  };
+
+  return (
+    <section className="space-y-6">
+      <div className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6 lg:flex-row lg:items-center lg:justify-between">
+        <div className="space-y-1">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600">
+            {dict.home.eyebrow}
+          </p>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            {dict.home.title}
+          </h1>
+        </div>
+
+        <button
+          type="button"
+          title={dict.home.createMovieTooltip}
+          aria-label={dict.home.createMovieTooltip}
+          className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 sm:w-auto"
+        >
+          <PlusIcon />
+          <span>{dict.home.createMovie}</span>
+        </button>
+      </div>
+
+      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="border-b border-slate-200 px-5 py-4 sm:px-6">
+          <h2 className="text-lg font-semibold text-slate-900">{dict.home.featuredTitle}</h2>
+        </div>
+
+        {renderContent()}
       </div>
     </section>
   );
