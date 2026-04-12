@@ -40,6 +40,17 @@ export type Dictionary = {
     detailsAction: string;
     detailsTooltip: string;
   };
+  detail: {
+    backAction: string;
+    titleLabel: string;
+    releaseDateLabel: string;
+    durationLabel: string;
+    durationUnit: string;
+    ratingLabel: string;
+    descriptionLabel: string;
+    notFound: string;
+    errorLoading: string;
+  };
 };
 
 /**
@@ -78,6 +89,17 @@ const dictionaries: Record<Locale, Dictionary> = {
       detailsAction: "View Details",
       detailsTooltip: "View details for",
     },
+    detail: {
+      backAction: "Back to list",
+      titleLabel: "Title",
+      releaseDateLabel: "Release Date",
+      durationLabel: "Duration",
+      durationUnit: "min",
+      ratingLabel: "Rating",
+      descriptionLabel: "Description",
+      notFound: "Movie not found",
+      errorLoading: "Error loading movie",
+    },
   },
   "es-MX": {
     metadata: {
@@ -110,6 +132,17 @@ const dictionaries: Record<Locale, Dictionary> = {
       actionColumn: "Acción",
       detailsAction: "Ver Detalles",
       detailsTooltip: "Ver detalles de",
+    },
+    detail: {
+      backAction: "Volver a la lista",
+      titleLabel: "Título",
+      releaseDateLabel: "Fecha de estreno",
+      durationLabel: "Duración",
+      durationUnit: "min",
+      ratingLabel: "Clasificación",
+      descriptionLabel: "Descripción",
+      notFound: "Película no encontrada",
+      errorLoading: "Error al cargar la película",
     },
   },
 };
