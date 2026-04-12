@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { getClientDictionary, locales } from "@/lib/client-dictionaries";
 import { useMovies } from "@/hooks/useMovies";
 import { use, useEffect, useState } from "react";
@@ -117,15 +118,15 @@ export default function Home({
                   <p className="mt-1 text-sm text-slate-700">{new Date(movie.launchDate).getFullYear()}</p>
                 </div>
 
-                <button
-                  type="button"
+                <Link
+                  href={`/${lang}/movies/${movie.id}`}
                   title={`${dict.home.detailsTooltip} ${movie.name}`}
                   aria-label={`${dict.home.detailsTooltip} ${movie.name}`}
                   className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-blue-300 hover:text-blue-600"
                 >
                   <EyeIcon />
                   <span>{dict.home.detailsAction}</span>
-                </button>
+                </Link>
               </div>
             </article>
           ))}
@@ -157,15 +158,15 @@ export default function Home({
                     {new Date(movie.launchDate).getFullYear()}
                   </td>
                   <td className="px-4 py-3 text-right lg:px-6 lg:py-4">
-                    <button
-                      type="button"
+                    <Link
+                      href={`/${lang}/movies/${movie.id}`}
                       title={`${dict.home.detailsTooltip} ${movie.name}`}
                       aria-label={`${dict.home.detailsTooltip} ${movie.name}`}
                       className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-blue-300 hover:text-blue-600 xl:px-4"
                     >
                       <EyeIcon />
                       <span>{dict.home.detailsAction}</span>
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               ))}
