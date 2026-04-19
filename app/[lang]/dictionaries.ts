@@ -65,6 +65,23 @@ type Dictionary = {
       idLabel: string;
       profileLabel: string;
     };
+    create: {
+      title: string;
+      subtitle: string;
+      nameLabel: string;
+      namePlaceholder: string;
+      profileLabel: string;
+      profilePlaceholder: string;
+      profileHelper: string;
+      save: string;
+      saving: string;
+      cancel: string;
+      backToList: string;
+      validation: {
+        nameRequired: string;
+        profileMaxLength: string;
+      };
+    };
   };
 };
 
@@ -133,6 +150,23 @@ const dictionaries: Record<Locale, Dictionary> = {
         idLabel: "ID",
         profileLabel: "Profile",
       },
+      create: {
+        title: "Create Producer",
+        subtitle: "Fill in producer information and save when all validations pass.",
+        nameLabel: "Name",
+        namePlaceholder: "Enter producer name",
+        profileLabel: "Profile",
+        profilePlaceholder: "Enter producer profile (optional)",
+        profileHelper: "Optional. Maximum",
+        save: "Save",
+        saving: "Saving...",
+        cancel: "Cancel",
+        backToList: "Back to producers",
+        validation: {
+          nameRequired: "Name is mandatory",
+          profileMaxLength: "Profile must be at most",
+        },
+      },
     },
   },
   "es-MX": {
@@ -198,6 +232,23 @@ const dictionaries: Record<Locale, Dictionary> = {
         nameLabel: "Nombre",
         idLabel: "ID",
         profileLabel: "Perfil",
+      },
+      create: {
+        title: "Crear Productor",
+        subtitle: "Completa la información del productor y guarda cuando todas las validaciones pasen.",
+        nameLabel: "Nombre",
+        namePlaceholder: "Ingresa el nombre del productor",
+        profileLabel: "Perfil",
+        profilePlaceholder: "Ingresa el perfil del productor (opcional)",
+        profileHelper: "Opcional. Máximo",
+        save: "Guardar",
+        saving: "Guardando...",
+        cancel: "Cancelar",
+        backToList: "Volver a productores",
+        validation: {
+          nameRequired: "El nombre es obligatorio",
+          profileMaxLength: "El perfil debe tener como máximo",
+        },
       },
     },
   },

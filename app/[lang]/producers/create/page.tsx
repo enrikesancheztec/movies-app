@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCreateProducer } from "@/hooks/useCreateProducer";
@@ -66,6 +66,25 @@ export default function CreateProducerPage({
 
   const invalidLocale = !isSupportedLocale(lang);
 
+  const translateValidationError = useCallback(
+    (message?: string): string | undefined => {
+      if (!message || !dict) {
+        return message;
+      }
+
+      if (message === "Name is mandatory") {
+        return dict.producers.create.validation.nameRequired;
+      }
+
+      if (message.startsWith("Profile must be at most")) {
+        return `${dict.producers.create.validation.profileMaxLength} ${MAX_PROFILE_LENGTH} characters`;
+      }
+
+      return message;
+    },
+    [dict]
+  );
+
   useEffect(() => {
     if (!isSupportedLocale(lang)) {
       return;
@@ -94,7 +113,7 @@ export default function CreateProducerPage({
     return (
       <section className="space-y-6">
         <div className="py-12 text-center">
-          <p className="text-sm font-medium text-red-600">Invalid language</p>
+          <p className="text-sm font-medium text-red-600">{dict?.producers.invalidLanguage ?? "Invalid language"}</p>
         </div>
       </section>
     );
@@ -111,6 +130,9 @@ export default function CreateProducerPage({
   }
 
   const profileLength = values.profile.length;
+  const copy = dict.producers.create;
+  const nameErrorText = translateValidationError(errors.name);
+  const profileErrorText = translateValidationError(errors.profile);
 
   return (
     <section className="space-y-6">
@@ -119,10 +141,10 @@ export default function CreateProducerPage({
           {dict.home.eyebrow}
         </p>
         <h1 className="mt-2 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-          Create Producer
+          {copy.title}
         </h1>
         <p className="mt-1 text-sm text-slate-600">
-          Fill in producer information and save when all validations pass.
+          {copy.subtitle}
         </p>
       </div>
 
@@ -130,7 +152,7 @@ export default function CreateProducerPage({
         <form onSubmit={handleSubmit} className="space-y-6 p-5 sm:p-6 lg:p-8">
           <div className="space-y-2">
             <label htmlFor="name" className="block text-sm font-semibold text-slate-800">
-              Name <span className="text-red-600">*</span>
+              {copy.nameLabel} <span className="text-red-600">*</span>
             </label>
             <input
               id="name"
@@ -138,7 +160,7 @@ export default function CreateProducerPage({
               type="text"
               value={values.name}
               onChange={(event) => setField("name", event.target.value)}
-              placeholder="Enter producer name"
+              placeholder={copy.namePlaceholder}
               aria-invalid={Boolean(errors.name)}
               aria-describedby={errors.name ? "name-error" : undefined}
               className={`block w-full rounded-md border px-3 py-2 text-sm text-slate-900 shadow-sm transition focus:outline-none focus:ring-2 ${
@@ -147,23 +169,23 @@ export default function CreateProducerPage({
                   : "border-slate-300 bg-white focus:border-blue-400 focus:ring-blue-200"
               }`}
             />
-            {errors.name && (
+            {nameErrorText && (
               <p id="name-error" className="text-sm font-medium text-red-600">
-                {errors.name}
+                {nameErrorText}
               </p>
             )}
           </div>
 
           <div className="space-y-2">
             <label htmlFor="profile" className="block text-sm font-semibold text-slate-800">
-              Profile
+              {copy.profileLabel}
             </label>
             <textarea
               id="profile"
               name="profile"
               value={values.profile}
               onChange={(event) => setField("profile", event.target.value)}
-              placeholder="Enter producer profile (optional)"
+              placeholder={copy.profilePlaceholder}
               rows={6}
               aria-invalid={Boolean(errors.profile)}
               aria-describedby={errors.profile ? "profile-error" : "profile-help"}
@@ -175,15 +197,15 @@ export default function CreateProducerPage({
             />
             <div className="flex items-center justify-between">
               <p id="profile-help" className="text-xs text-slate-500">
-                Optional. Maximum {MAX_PROFILE_LENGTH} characters.
+                {copy.profileHelper} {MAX_PROFILE_LENGTH} characters.
               </p>
               <p className="text-xs text-slate-500">
                 {profileLength}/{MAX_PROFILE_LENGTH}
               </p>
             </div>
-            {errors.profile && (
+            {profileErrorText && (
               <p id="profile-error" className="text-sm font-medium text-red-600">
-                {errors.profile}
+                {profileErrorText}
               </p>
             )}
           </div>
@@ -204,7 +226,7 @@ export default function CreateProducerPage({
               className="inline-flex items-center justify-center gap-2 rounded-md border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
             >
               <CancelIcon />
-              <span>Cancel</span>
+              <span>{copy.cancel}</span>
             </button>
 
             <button
@@ -213,7 +235,7 @@ export default function CreateProducerPage({
               className="inline-flex items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
             >
               <SaveIcon />
-              <span>{isSubmitting ? "Saving..." : "Save"}</span>
+              <span>{isSubmitting ? copy.saving : copy.save}</span>
             </button>
           </div>
 
@@ -222,7 +244,7 @@ export default function CreateProducerPage({
               href={`/${lang}/producers`}
               className="text-xs font-semibold text-slate-500 underline underline-offset-2 hover:text-slate-700"
             >
-              Back to producers
+              {copy.backToList}
             </Link>
           </div>
         </form>
