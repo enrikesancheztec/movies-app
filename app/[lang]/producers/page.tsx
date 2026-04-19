@@ -1,6 +1,7 @@
 "use client";
 
 import { use, useEffect, useState } from "react";
+import Link from "next/link";
 import {
   getClientDictionary,
   locales,
@@ -8,6 +9,20 @@ import {
   type Locale,
 } from "@/lib/client-dictionaries";
 import { useProducers } from "@/hooks/useProducers";
+
+function EyeIcon() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" className="h-4 w-4">
+      <path
+        d="M1.75 8C2.95 5.75 5.17 4.25 8 4.25C10.83 4.25 13.05 5.75 14.25 8C13.05 10.25 10.83 11.75 8 11.75C5.17 11.75 2.95 10.25 1.75 8Z"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinejoin="round"
+      />
+      <circle cx="8" cy="8" r="1.75" stroke="currentColor" strokeWidth="1.25" />
+    </svg>
+  );
+}
 
 /**
  * Reusable loading indicator for async producers UI states.
@@ -98,19 +113,37 @@ export default function ProducersPage({
     return (
       <>
         <div className="grid gap-4 p-4 md:hidden">
-          {producers.map((producer) => (
-            <article
-              key={producer.id}
-              className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm"
-            >
-              <div className="space-y-1">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
-                  {copy.nameColumn}
-                </p>
-                <h3 className="text-base font-semibold text-slate-900">{producer.name}</h3>
-              </div>
-            </article>
-          ))}
+          {producers.map((producer, index) => {
+            const key = `${producer.id ?? "no-id"}-${producer.name}-${index}`;
+
+            return (
+              <article
+                key={key}
+                className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm"
+              >
+                <div className="space-y-1">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+                    {copy.nameColumn}
+                  </p>
+                  <h3 className="text-base font-semibold text-slate-900">{producer.name}</h3>
+                </div>
+
+                {producer.id !== undefined && (
+                  <div className="mt-4 flex justify-end">
+                    <Link
+                      href={`/${lang}/producers/${producer.id}`}
+                      title={`${dict.home.detailsTooltip} ${producer.name}`}
+                      aria-label={`${dict.home.detailsTooltip} ${producer.name}`}
+                      className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-blue-300 hover:text-blue-600"
+                    >
+                      <EyeIcon />
+                      <span>{dict.home.detailsAction}</span>
+                    </Link>
+                  </div>
+                )}
+              </article>
+            );
+          })}
         </div>
 
         <div className="hidden overflow-x-auto md:block">
@@ -120,17 +153,37 @@ export default function ProducersPage({
                 <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 lg:px-6 xl:py-4">
                   {copy.nameColumn}
                 </th>
+                <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 lg:px-6 xl:py-4">
+                  {dict.home.actionColumn}
+                </th>
               </tr>
             </thead>
 
             <tbody className="divide-y divide-slate-100 bg-white">
-              {producers.map((producer) => (
-                <tr key={producer.id} className="transition hover:bg-slate-50/80">
-                  <td className="px-4 py-3 text-sm font-medium text-slate-900 lg:px-6 lg:py-4 xl:text-base">
-                    {producer.name}
-                  </td>
-                </tr>
-              ))}
+              {producers.map((producer, index) => {
+                const key = `${producer.id ?? "no-id"}-${producer.name}-${index}`;
+
+                return (
+                  <tr key={key} className="transition hover:bg-slate-50/80">
+                    <td className="px-4 py-3 text-sm font-medium text-slate-900 lg:px-6 lg:py-4 xl:text-base">
+                      {producer.name}
+                    </td>
+                    <td className="px-4 py-3 text-right lg:px-6 lg:py-4">
+                      {producer.id !== undefined && (
+                        <Link
+                          href={`/${lang}/producers/${producer.id}`}
+                          title={`${dict.home.detailsTooltip} ${producer.name}`}
+                          aria-label={`${dict.home.detailsTooltip} ${producer.name}`}
+                          className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-blue-300 hover:text-blue-600 xl:px-4"
+                        >
+                          <EyeIcon />
+                          <span>{dict.home.detailsAction}</span>
+                        </Link>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
