@@ -18,6 +18,9 @@ export type Dictionary = {
   };
   layout: {
     openMenu: string;
+    navigationLabel: string;
+    moviesLink: string;
+    producersLink: string;
     userLabel: string;
     logout: string;
     repository: string;
@@ -73,6 +76,9 @@ const dictionaries: Record<Locale, Dictionary> = {
     },
     layout: {
       openMenu: "Open menu",
+      navigationLabel: "Navigation",
+      moviesLink: "Movies",
+      producersLink: "Producers",
       userLabel: "User: John Doe",
       logout: "Logout",
       repository: "GitHub Repository",
@@ -126,6 +132,9 @@ const dictionaries: Record<Locale, Dictionary> = {
     },
     layout: {
       openMenu: "Abrir menú",
+      navigationLabel: "Navegación",
+      moviesLink: "Películas",
+      producersLink: "Productores",
       userLabel: "Usuario: John Doe",
       logout: "Cerrar sesión",
       repository: "Repositorio en GitHub",
