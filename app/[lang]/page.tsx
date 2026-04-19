@@ -1,7 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { getClientDictionary, locales } from "@/lib/client-dictionaries";
+import {
+  getClientDictionary,
+  locales,
+  type Dictionary,
+  type Locale,
+} from "@/lib/client-dictionaries";
 import { useMovies } from "@/hooks/useMovies";
 import { use, useEffect, useState } from "react";
 
@@ -40,29 +45,31 @@ function LoadingSpinner() {
   );
 }
 
+function isSupportedLocale(value: string): value is Locale {
+  return locales.includes(value as Locale);
+}
+
 export default function Home({
   params,
 }: {
   readonly params: Promise<{ readonly lang: string }>;
 }) {
   const { lang } = use(params);
-  const [dict, setDict] = useState<any>(null);
-  const [dictError, setDictError] = useState(false);
+  const [dict, setDict] = useState<Dictionary | null>(null);
   const { movies, loading, error } = useMovies();
+  const invalidLocale = !isSupportedLocale(lang);
 
   useEffect(() => {
-    // Load dictionary on client side
-    if (!locales.includes(lang as any)) {
-      setDictError(true);
+    if (!isSupportedLocale(lang)) {
       return;
     }
 
-    getClientDictionary(lang as "en-US" | "es-MX").then((d) => {
+    getClientDictionary(lang).then((d) => {
       setDict(d);
     });
   }, [lang]);
 
-  if (dictError) {
+  if (invalidLocale) {
     return (
       <section className="space-y-6">
         <div className="text-center py-12">

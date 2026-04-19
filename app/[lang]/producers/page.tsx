@@ -37,12 +37,11 @@ export default function ProducersPage({
 }) {
   const { lang } = use(params);
   const [dict, setDict] = useState<Dictionary | null>(null);
-  const [dictError, setDictError] = useState(false);
   const { producers, loading, error } = useProducers();
+  const invalidLocale = !isSupportedLocale(lang);
 
   useEffect(() => {
     if (!isSupportedLocale(lang)) {
-      setDictError(true);
       return;
     }
 
@@ -51,7 +50,7 @@ export default function ProducersPage({
     });
   }, [lang]);
 
-  if (dictError) {
+  if (invalidLocale) {
     return (
       <section className="space-y-6">
         <div className="py-12 text-center">
