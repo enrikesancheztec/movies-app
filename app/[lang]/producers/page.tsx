@@ -1,9 +1,17 @@
 "use client";
 
 import { use, useEffect, useState } from "react";
-import { getClientDictionary, locales, type Dictionary } from "@/lib/client-dictionaries";
+import {
+  getClientDictionary,
+  locales,
+  type Dictionary,
+  type Locale,
+} from "@/lib/client-dictionaries";
 import { useProducers } from "@/hooks/useProducers";
 
+/**
+ * Reusable loading indicator for async producers UI states.
+ */
 function LoadingSpinner() {
   return (
     <div className="flex items-center justify-center py-12">
@@ -12,6 +20,16 @@ function LoadingSpinner() {
   );
 }
 
+/**
+ * Type guard for locale values used by client-side dictionary loading.
+ */
+function isSupportedLocale(value: string): value is Locale {
+  return locales.includes(value as Locale);
+}
+
+/**
+ * Localized producers listing page.
+ */
 export default function ProducersPage({
   params,
 }: {
@@ -23,12 +41,12 @@ export default function ProducersPage({
   const { producers, loading, error } = useProducers();
 
   useEffect(() => {
-    if (!locales.includes(lang as any)) {
+    if (!isSupportedLocale(lang)) {
       setDictError(true);
       return;
     }
 
-    getClientDictionary(lang as "en-US" | "es-MX").then((resolvedDict) => {
+    getClientDictionary(lang).then((resolvedDict) => {
       setDict(resolvedDict);
     });
   }, [lang]);

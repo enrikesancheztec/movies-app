@@ -23,6 +23,7 @@ export function BurgerMenu({
 }: BurgerMenuProps) {
   const detailsRef = useRef<HTMLDetailsElement | null>(null);
 
+  /** Programmatically closes the dropdown after selecting a navigation link. */
   const closeMenu = () => {
     if (detailsRef.current) {
       detailsRef.current.open = false;
