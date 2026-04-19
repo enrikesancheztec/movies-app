@@ -115,10 +115,13 @@ export default function ProducersPage({
         <div className="grid gap-4 p-4 md:hidden">
           {producers.map((producer, index) => {
             const key = `${producer.id ?? "no-id"}-${producer.name}-${index}`;
+            const rowTestId =
+              producer.id !== undefined ? `producer-row-${producer.id}` : `producer-row-no-id-${index}`;
 
             return (
               <article
                 key={key}
+                data-testid={rowTestId}
                 className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm"
               >
                 <div className="space-y-1">
