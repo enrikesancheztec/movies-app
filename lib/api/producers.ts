@@ -49,6 +49,26 @@ export async function getProducerById(id: number): Promise<Producer> {
 }
 
 /**
+ * Create a new producer in the backend API.
+ * @param producer - Producer data without ID (backend assigns it)
+ * @returns Promise<Producer> - Created producer with assigned ID
+ * @throws Error if API request fails or validation fails
+ */
+export async function createProducer(
+  producer: Omit<Producer, "id">
+): Promise<Producer> {
+  try {
+    const response = await apiClient.post<Producer>("/producers", producer);
+    return response.data;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    const message = `Failed to create producer: ${axiosError.message}`;
+    console.error(message);
+    throw new Error(message);
+  }
+}
+
+/**
  * Default configured Producers API client.
  */
 export default apiClient;
