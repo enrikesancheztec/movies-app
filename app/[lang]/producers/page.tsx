@@ -37,7 +37,9 @@ export default function ProducersPage({
     return (
       <section className="space-y-6">
         <div className="py-12 text-center">
-          <p className="text-sm font-medium text-red-600">Invalid language</p>
+          <p className="text-sm font-medium text-red-600">
+            {dict?.producers.invalidLanguage ?? "Invalid language"}
+          </p>
         </div>
       </section>
     );

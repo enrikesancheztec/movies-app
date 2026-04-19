@@ -55,6 +55,7 @@ type Dictionary = {
     nameColumn: string;
     emptyState: string;
     errorLoading: string;
+    invalidLanguage: string;
   };
 };
 
@@ -113,6 +114,7 @@ const dictionaries: Record<Locale, Dictionary> = {
       nameColumn: "Producer",
       emptyState: "No producers found.",
       errorLoading: "Error loading producers",
+      invalidLanguage: "Invalid language",
     },
   },
   "es-MX": {
@@ -169,6 +171,7 @@ const dictionaries: Record<Locale, Dictionary> = {
       nameColumn: "Productor",
       emptyState: "No se encontraron productores.",
       errorLoading: "Error al cargar productores",
+      invalidLanguage: "Idioma no válido",
     },
   },
 };
