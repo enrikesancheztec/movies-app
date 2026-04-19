@@ -12,27 +12,6 @@ function LoadingSpinner() {
   );
 }
 
-const producersCopy = {
-  "en-US": {
-    title: "Producers List",
-    subtitle: "Browse all producers available in the catalog.",
-    featuredTitle: "Producers",
-    featuredSubtitle: "Showing all records returned by the API.",
-    nameColumn: "Producer",
-    emptyState: "No producers found.",
-    errorLoading: "Error loading producers",
-  },
-  "es-MX": {
-    title: "Lista de Productores",
-    subtitle: "Consulta todos los productores disponibles en el catálogo.",
-    featuredTitle: "Productores",
-    featuredSubtitle: "Mostrando todos los registros devueltos por el API.",
-    nameColumn: "Productor",
-    emptyState: "No se encontraron productores.",
-    errorLoading: "Error al cargar productores",
-  },
-} as const;
-
 export default function ProducersPage({
   params,
 }: {
@@ -72,7 +51,7 @@ export default function ProducersPage({
     );
   }
 
-  const copy = producersCopy[lang as "en-US" | "es-MX"];
+  const copy = dict.producers;
 
   const renderContent = () => {
     if (loading) {
