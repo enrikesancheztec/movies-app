@@ -165,9 +165,11 @@ export default function ProducersPage({
             <tbody className="divide-y divide-slate-100 bg-white">
               {producers.map((producer, index) => {
                 const key = `${producer.id ?? "no-id"}-${producer.name}-${index}`;
+                const rowTestId =
+                  producer.id !== undefined ? `producer-row-${producer.id}` : `producer-row-no-id-${index}`;
 
                 return (
-                  <tr key={key} className="transition hover:bg-slate-50/80">
+                  <tr key={key} data-testid={rowTestId} className="transition hover:bg-slate-50/80">
                     <td className="px-4 py-3 text-sm font-medium text-slate-900 lg:px-6 lg:py-4 xl:text-base">
                       {producer.name}
                     </td>
