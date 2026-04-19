@@ -203,6 +203,20 @@ export default function ProducersPage({
           </h1>
           <p className="text-sm text-slate-600">{copy.subtitle}</p>
         </div>
+        <Link
+          href={`/${lang}/producers/create`}
+          className="inline-flex items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 whitespace-nowrap"
+        >
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" className="h-4 w-4">
+            <path
+              d="M8 1.5v13m6.5-6.5h-13"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+          </svg>
+          <span>{copy.title.includes("Crear") ? "Crear Productor" : "Create Producer"}</span>
+        </Link>
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
