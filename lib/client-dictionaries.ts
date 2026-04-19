@@ -70,6 +70,7 @@ export type Dictionary = {
       loading: string;
       nameLabel: string;
       idLabel: string;
+      profileLabel: string;
     };
   };
 };
@@ -140,6 +141,7 @@ const dictionaries: Record<Locale, Dictionary> = {
         loading: "Loading producer...",
         nameLabel: "Name",
         idLabel: "ID",
+        profileLabel: "Profile",
       },
     },
   },
@@ -205,6 +207,7 @@ const dictionaries: Record<Locale, Dictionary> = {
         loading: "Cargando productor...",
         nameLabel: "Nombre",
         idLabel: "ID",
+        profileLabel: "Perfil",
       },
     },
   },
