@@ -219,7 +219,10 @@ export default function ProducersPage({
         </Link>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div
+        data-testid="producers-list"
+        className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+      >
         <div className="border-b border-slate-200 px-5 py-4 sm:px-6">
           <h2 className="text-lg font-semibold text-slate-900">{copy.featuredTitle}</h2>
           <p className="mt-1 text-sm text-slate-600">{copy.featuredSubtitle}</p>
