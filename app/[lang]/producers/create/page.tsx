@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useCallback, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCreateProducer } from "@/hooks/useCreateProducer";
@@ -64,6 +64,10 @@ export default function CreateProducerPage({
     cancel,
   } = useCreateProducer();
 
+  const nameInputRef = useRef<HTMLInputElement | null>(null);
+  const profileInputRef = useRef<HTMLTextAreaElement | null>(null);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
   const invalidLocale = !isSupportedLocale(lang);
 
   const translateValidationError = useCallback(
@@ -95,8 +99,24 @@ export default function CreateProducerPage({
     });
   }, [lang]);
 
+  useEffect(() => {
+    if (!hasSubmitted) {
+      return;
+    }
+
+    if (errors.name) {
+      nameInputRef.current?.focus();
+      return;
+    }
+
+    if (errors.profile) {
+      profileInputRef.current?.focus();
+    }
+  }, [errors.name, errors.profile, hasSubmitted]);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setHasSubmitted(true);
     const created = await submit();
 
     if (created) {
@@ -150,19 +170,53 @@ export default function CreateProducerPage({
 
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         <form onSubmit={handleSubmit} className="space-y-6 p-5 sm:p-6 lg:p-8">
+          {hasSubmitted && (nameErrorText || profileErrorText) && (
+            <div
+              role="alert"
+              aria-live="assertive"
+              className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
+            >
+              <p className="font-semibold">Please review the highlighted fields before saving.</p>
+              {nameErrorText && (
+                <button
+                  type="button"
+                  onClick={() => nameInputRef.current?.focus()}
+                  className="mt-2 block text-left underline underline-offset-2"
+                >
+                  • {nameErrorText}
+                </button>
+              )}
+              {profileErrorText && (
+                <button
+                  type="button"
+                  onClick={() => profileInputRef.current?.focus()}
+                  className="mt-1 block text-left underline underline-offset-2"
+                >
+                  • {profileErrorText}
+                </button>
+              )}
+            </div>
+          )}
+
           <div className="space-y-2">
             <label htmlFor="name" className="block text-sm font-semibold text-slate-800">
               {copy.nameLabel} <span className="text-red-600">*</span>
             </label>
+            <p id="name-help" className="text-xs text-slate-500">
+              This field is required.
+            </p>
             <input
+              ref={nameInputRef}
               id="name"
               name="name"
               type="text"
+              required
+              autoComplete="off"
               value={values.name}
               onChange={(event) => setField("name", event.target.value)}
               placeholder={copy.namePlaceholder}
               aria-invalid={Boolean(errors.name)}
-              aria-describedby={errors.name ? "name-error" : undefined}
+              aria-describedby={errors.name ? "name-help name-error" : "name-help"}
               className={`block w-full rounded-md border px-3 py-2 text-sm text-slate-900 shadow-sm transition focus:outline-none focus:ring-2 ${
                 errors.name
                   ? "border-red-300 bg-red-50/40 focus:border-red-400 focus:ring-red-200"
@@ -170,7 +224,7 @@ export default function CreateProducerPage({
               }`}
             />
             {nameErrorText && (
-              <p id="name-error" className="text-sm font-medium text-red-600">
+              <p id="name-error" className="text-sm font-medium text-red-600" aria-live="polite">
                 {nameErrorText}
               </p>
             )}
@@ -181,14 +235,16 @@ export default function CreateProducerPage({
               {copy.profileLabel}
             </label>
             <textarea
+              ref={profileInputRef}
               id="profile"
               name="profile"
               value={values.profile}
               onChange={(event) => setField("profile", event.target.value)}
               placeholder={copy.profilePlaceholder}
               rows={6}
+              maxLength={MAX_PROFILE_LENGTH}
               aria-invalid={Boolean(errors.profile)}
-              aria-describedby={errors.profile ? "profile-error" : "profile-help"}
+              aria-describedby={errors.profile ? "profile-help profile-error" : "profile-help"}
               className={`block w-full rounded-md border px-3 py-2 text-sm text-slate-900 shadow-sm transition focus:outline-none focus:ring-2 ${
                 errors.profile
                   ? "border-red-300 bg-red-50/40 focus:border-red-400 focus:ring-red-200"
