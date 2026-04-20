@@ -134,6 +134,7 @@ export default function ProducersPage({
                 {producer.id !== undefined && (
                   <div className="mt-4 flex justify-end">
                     <Link
+                      data-testid="view-producer-details"
                       href={`/${lang}/producers/${producer.id}`}
                       title={`${dict.home.detailsTooltip} ${producer.name}`}
                       aria-label={`${dict.home.detailsTooltip} ${producer.name}`}
@@ -176,6 +177,7 @@ export default function ProducersPage({
                     <td className="px-4 py-3 text-right lg:px-6 lg:py-4">
                       {producer.id !== undefined && (
                         <Link
+                          data-testid="view-producer-details"
                           href={`/${lang}/producers/${producer.id}`}
                           title={`${dict.home.detailsTooltip} ${producer.name}`}
                           aria-label={`${dict.home.detailsTooltip} ${producer.name}`}
