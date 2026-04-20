@@ -207,6 +207,7 @@ export default function CreateProducerPage({
             </p>
             <input
               ref={nameInputRef}
+              data-testid="producer-name-input"
               id="name"
               name="name"
               type="text"
@@ -236,6 +237,7 @@ export default function CreateProducerPage({
             </label>
             <textarea
               ref={profileInputRef}
+              data-testid="producer-profile-input"
               id="profile"
               name="profile"
               value={values.profile}
@@ -277,6 +279,7 @@ export default function CreateProducerPage({
 
           <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
             <button
+              data-testid="cancel-button"
               type="button"
               onClick={handleCancel}
               className="inline-flex items-center justify-center gap-2 rounded-md border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
@@ -286,6 +289,7 @@ export default function CreateProducerPage({
             </button>
 
             <button
+              data-testid="save-producer-button"
               type="submit"
               disabled={!isValid || isSubmitting}
               className="inline-flex items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
