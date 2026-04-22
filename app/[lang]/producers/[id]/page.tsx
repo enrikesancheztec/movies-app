@@ -178,9 +178,6 @@ export default function ProducerDetailPage({
 
             {!loading && !error && producer && (
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                {producer.id !== undefined && (
-                  <DetailRow label={d?.idLabel ?? "ID"} value={producer.id} />
-                )}
                 <DetailRow label={d?.nameLabel ?? "Name"} value={producer.name} />
                 {producer.profile && (
                   <div className="md:col-span-2 flex flex-col gap-0.5">
