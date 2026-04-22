@@ -56,6 +56,15 @@ type Dictionary = {
     emptyState: string;
     errorLoading: string;
     invalidLanguage: string;
+    detail: {
+      backLink: string;
+      notFound: string;
+      errorLoading: string;
+      loading: string;
+      nameLabel: string;
+      idLabel: string;
+      profileLabel: string;
+    };
   };
 };
 
@@ -115,6 +124,15 @@ const dictionaries: Record<Locale, Dictionary> = {
       emptyState: "No producers found.",
       errorLoading: "Error loading producers",
       invalidLanguage: "Invalid language",
+      detail: {
+        backLink: "← Back to Producers",
+        notFound: "Producer not found.",
+        errorLoading: "Error loading producer.",
+        loading: "Loading producer...",
+        nameLabel: "Name",
+        idLabel: "ID",
+        profileLabel: "Profile",
+      },
     },
   },
   "es-MX": {
@@ -172,6 +190,15 @@ const dictionaries: Record<Locale, Dictionary> = {
       emptyState: "No se encontraron productores.",
       errorLoading: "Error al cargar productores",
       invalidLanguage: "Idioma no válido",
+      detail: {
+        backLink: "← Volver a Productores",
+        notFound: "Productor no encontrado.",
+        errorLoading: "Error al cargar el productor.",
+        loading: "Cargando productor...",
+        nameLabel: "Nombre",
+        idLabel: "ID",
+        profileLabel: "Perfil",
+      },
     },
   },
 };

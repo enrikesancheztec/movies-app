@@ -19,4 +19,9 @@ export type Producer = {
    * Producer full name.
    */
   name: string;
+
+  /**
+   * Biography or profile description of the producer.
+   */
+  profile?: string;
 };

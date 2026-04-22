@@ -31,6 +31,24 @@ export async function getProducers(): Promise<Producer[]> {
 }
 
 /**
+ * Fetch a single producer by ID from the backend API.
+ * @param id - Producer ID to fetch
+ * @returns Promise<Producer> - Producer object with the given ID
+ * @throws Error if API request fails or producer not found
+ */
+export async function getProducerById(id: number): Promise<Producer> {
+  try {
+    const response = await apiClient.get<Producer>(`/producers/${id}`);
+    return response.data;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    const message = `Failed to fetch producer with ID ${id}: ${axiosError.message}`;
+    console.error(message);
+    throw new Error(message);
+  }
+}
+
+/**
  * Default configured Producers API client.
  */
 export default apiClient;
