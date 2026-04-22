@@ -115,10 +115,13 @@ export default function ProducersPage({
         <div className="grid gap-4 p-4 md:hidden">
           {producers.map((producer, index) => {
             const key = `${producer.id ?? "no-id"}-${producer.name}-${index}`;
+            const rowTestId =
+              producer.id !== undefined ? `producer-row-${producer.id}` : `producer-row-no-id-${index}`;
 
             return (
               <article
                 key={key}
+                data-testid={rowTestId}
                 className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm"
               >
                 <div className="space-y-1">
@@ -131,6 +134,7 @@ export default function ProducersPage({
                 {producer.id !== undefined && (
                   <div className="mt-4 flex justify-end">
                     <Link
+                      data-testid="view-producer-details"
                       href={`/${lang}/producers/${producer.id}`}
                       title={`${dict.home.detailsTooltip} ${producer.name}`}
                       aria-label={`${dict.home.detailsTooltip} ${producer.name}`}
@@ -162,15 +166,18 @@ export default function ProducersPage({
             <tbody className="divide-y divide-slate-100 bg-white">
               {producers.map((producer, index) => {
                 const key = `${producer.id ?? "no-id"}-${producer.name}-${index}`;
+                const rowTestId =
+                  producer.id !== undefined ? `producer-row-${producer.id}` : `producer-row-no-id-${index}`;
 
                 return (
-                  <tr key={key} className="transition hover:bg-slate-50/80">
+                  <tr key={key} data-testid={rowTestId} className="transition hover:bg-slate-50/80">
                     <td className="px-4 py-3 text-sm font-medium text-slate-900 lg:px-6 lg:py-4 xl:text-base">
                       {producer.name}
                     </td>
                     <td className="px-4 py-3 text-right lg:px-6 lg:py-4">
                       {producer.id !== undefined && (
                         <Link
+                          data-testid="view-producer-details"
                           href={`/${lang}/producers/${producer.id}`}
                           title={`${dict.home.detailsTooltip} ${producer.name}`}
                           aria-label={`${dict.home.detailsTooltip} ${producer.name}`}
@@ -219,7 +226,10 @@ export default function ProducersPage({
         </Link>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div
+        data-testid="producers-list"
+        className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+      >
         <div className="border-b border-slate-200 px-5 py-4 sm:px-6">
           <h2 className="text-lg font-semibold text-slate-900">{copy.featuredTitle}</h2>
           <p className="mt-1 text-sm text-slate-600">{copy.featuredSubtitle}</p>
