@@ -18,6 +18,9 @@ export type Dictionary = {
   };
   layout: {
     openMenu: string;
+    navigationLabel: string;
+    moviesLink: string;
+    producersLink: string;
     userLabel: string;
     logout: string;
     repository: string;
@@ -51,6 +54,16 @@ export type Dictionary = {
     notFound: string;
     errorLoading: string;
   };
+  producers: {
+    title: string;
+    subtitle: string;
+    featuredTitle: string;
+    featuredSubtitle: string;
+    nameColumn: string;
+    emptyState: string;
+    errorLoading: string;
+    invalidLanguage: string;
+  };
 };
 
 /**
@@ -64,6 +77,9 @@ const dictionaries: Record<Locale, Dictionary> = {
     },
     layout: {
       openMenu: "Open menu",
+      navigationLabel: "Navigation",
+      moviesLink: "Movies",
+      producersLink: "Producers",
       userLabel: "User: John Doe",
       logout: "Logout",
       repository: "GitHub Repository",
@@ -100,6 +116,16 @@ const dictionaries: Record<Locale, Dictionary> = {
       notFound: "Movie not found",
       errorLoading: "Error loading movie",
     },
+    producers: {
+      title: "Producers List",
+      subtitle: "Browse all producers available in the catalog.",
+      featuredTitle: "Producers",
+      featuredSubtitle: "Showing all records returned by the API.",
+      nameColumn: "Producer",
+      emptyState: "No producers found.",
+      errorLoading: "Error loading producers",
+      invalidLanguage: "Invalid language",
+    },
   },
   "es-MX": {
     metadata: {
@@ -108,6 +134,9 @@ const dictionaries: Record<Locale, Dictionary> = {
     },
     layout: {
       openMenu: "Abrir menú",
+      navigationLabel: "Navegación",
+      moviesLink: "Películas",
+      producersLink: "Productores",
       userLabel: "Usuario: John Doe",
       logout: "Cerrar sesión",
       repository: "Repositorio en GitHub",
@@ -143,6 +172,16 @@ const dictionaries: Record<Locale, Dictionary> = {
       descriptionLabel: "Descripción",
       notFound: "Película no encontrada",
       errorLoading: "Error al cargar la película",
+    },
+    producers: {
+      title: "Lista de Productores",
+      subtitle: "Consulta todos los productores disponibles en el catálogo.",
+      featuredTitle: "Productores",
+      featuredSubtitle: "Mostrando todos los registros devueltos por el API.",
+      nameColumn: "Productor",
+      emptyState: "No se encontraron productores.",
+      errorLoading: "Error al cargar productores",
+      invalidLanguage: "Idioma no válido",
     },
   },
 };

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { getDictionary, hasLocale, locales, type Locale } from "./dictionaries";
+import { BurgerMenu } from "./burger-menu";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,8 +41,8 @@ function LanguageSwitcher({
   currentLocale,
   labels,
 }: {
-  currentLocale: Locale;
-  labels: Record<Locale, string>;
+  readonly currentLocale: Locale;
+  readonly labels: Record<Locale, string>;
 }) {
   return (
     <div className="flex items-center gap-2">
@@ -67,6 +68,33 @@ function LanguageSwitcher({
   );
 }
 
+function NavLinks({
+  lang,
+  moviesLabel,
+  producersLabel,
+}: {
+  readonly lang: Locale;
+  readonly moviesLabel: string;
+  readonly producersLabel: string;
+}) {
+  return (
+    <nav className="flex items-center gap-2" aria-label="primary">
+      <Link
+        href={`/${lang}`}
+        className="rounded px-2.5 py-1 text-xs font-semibold transition border border-white/35 bg-white/10 text-white hover:bg-white/20"
+      >
+        {moviesLabel}
+      </Link>
+      <Link
+        href={`/${lang}/producers`}
+        className="rounded px-2.5 py-1 text-xs font-semibold transition border border-white/35 bg-white/10 text-white hover:bg-white/20"
+      >
+        {producersLabel}
+      </Link>
+    </nav>
+  );
+}
+
 export default async function RootLayout({
   children,
   params,
@@ -88,22 +116,26 @@ export default async function RootLayout({
         <header className="border-b border-slate-300 bg-blue-600 text-white shadow-sm">
           <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-3 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-center justify-between gap-4">
-              <button
-                type="button"
-                aria-label={dict.layout.openMenu}
-                title={dict.layout.openMenu}
-                className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded border border-white/40 bg-white/10 transition hover:bg-white/20"
-              >
-                <span className="h-0.5 w-5 bg-white" />
-                <span className="h-0.5 w-5 bg-white" />
-                <span className="h-0.5 w-5 bg-white" />
-              </button>
+              <BurgerMenu
+                lang={lang}
+                openMenuLabel={dict.layout.openMenu}
+                navigationLabel={dict.layout.navigationLabel}
+                moviesLabel={dict.layout.moviesLink}
+                producersLabel={dict.layout.producersLink}
+              />
 
               <div className="hidden lg:block">
-                <LanguageSwitcher
-                  currentLocale={lang}
-                  labels={dict.layout.languageNames}
-                />
+                <div className="flex items-center gap-3">
+                  <NavLinks
+                    lang={lang}
+                    moviesLabel={dict.layout.moviesLink}
+                    producersLabel={dict.layout.producersLink}
+                  />
+                  <LanguageSwitcher
+                    currentLocale={lang}
+                    labels={dict.layout.languageNames}
+                  />
+                </div>
               </div>
             </div>
 
