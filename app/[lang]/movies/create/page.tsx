@@ -61,7 +61,7 @@ export default function CreateMoviePage({
   const router = useRouter();
   const [dict, setDict] = useState<Dictionary | null>(null);
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const { values, errors, isSubmitting, submitError, setField, submit, cancel } = useCreateMovie();
+  const { values, errors, isSubmitting, submitError, setField, touchField, submit, cancel } = useCreateMovie();
   const { producers, loading: producersLoading } = useProducers();
 
   const nameRef = useRef<HTMLInputElement | null>(null);
@@ -211,6 +211,7 @@ export default function CreateMoviePage({
                 placeholder={c.namePlaceholder}
                 value={values.name}
                 onChange={(e) => setField("name", e.target.value)}
+                onBlur={() => touchField("name")}
                 aria-invalid={Boolean(errors.name)}
                 aria-describedby={errors.name ? "name-error" : undefined}
                 className={inputClass(Boolean(errors.name))}
@@ -233,6 +234,7 @@ export default function CreateMoviePage({
                 type="date"
                 value={values.launchDate}
                 onChange={(e) => setField("launchDate", e.target.value)}
+                onBlur={() => touchField("launchDate")}
                 aria-invalid={Boolean(errors.launchDate)}
                 aria-describedby={errors.launchDate ? "launchDate-error" : undefined}
                 className={inputClass(Boolean(errors.launchDate))}
@@ -259,6 +261,7 @@ export default function CreateMoviePage({
                 min={1}
                 value={values.duration}
                 onChange={(e) => setField("duration", e.target.value)}
+                onBlur={() => touchField("duration")}
                 aria-invalid={Boolean(errors.duration)}
                 aria-describedby={errors.duration ? "duration-error" : undefined}
                 className={inputClass(Boolean(errors.duration))}
@@ -280,6 +283,7 @@ export default function CreateMoviePage({
                 name="rating"
                 value={values.rating}
                 onChange={(e) => setField("rating", e.target.value)}
+                onBlur={() => touchField("rating")}
                 aria-invalid={Boolean(errors.rating)}
                 aria-describedby={errors.rating ? "rating-error" : undefined}
                 className={inputClass(Boolean(errors.rating))}
@@ -309,6 +313,7 @@ export default function CreateMoviePage({
               value={values.producerId}
               disabled={producersLoading}
               onChange={(e) => setField("producerId", e.target.value)}
+              onBlur={() => touchField("producerId")}
               aria-invalid={Boolean(errors.producerId)}
               aria-describedby={errors.producerId ? "producerId-error" : undefined}
               className={inputClass(Boolean(errors.producerId))}
@@ -340,6 +345,7 @@ export default function CreateMoviePage({
               placeholder={c.descriptionPlaceholder}
               value={values.description}
               onChange={(e) => setField("description", e.target.value)}
+              onBlur={() => touchField("description")}
               aria-invalid={Boolean(errors.description)}
               aria-describedby={errors.description ? "description-error" : "description-help"}
               className={inputClass(Boolean(errors.description))}

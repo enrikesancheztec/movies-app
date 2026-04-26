@@ -196,15 +196,15 @@ export default function Home({
           </h1>
         </div>
 
-        <button
-          type="button"
+        <Link
+          href={`/${lang}/movies/create`}
           title={dict.home.createMovieTooltip}
           aria-label={dict.home.createMovieTooltip}
           className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 sm:w-auto"
         >
           <PlusIcon />
           <span>{dict.home.createMovie}</span>
-        </button>
+        </Link>
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">

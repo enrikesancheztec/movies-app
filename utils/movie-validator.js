@@ -9,8 +9,11 @@ export const VALID_RATINGS = ["G", "PG", "PG_13", "R", "NC_17"];
 export const MAX_DESCRIPTION_LENGTH = 1000;
 
 /**
+ * Validates the movie title.
+ * Rule: name is mandatory and must not be blank.
+ *
  * @param {string} name
- * @returns {string | null}
+ * @returns {string | null} Validation message or null when valid.
  */
 export function validateMovieName(name) {
   if (typeof name !== "string" || name.trim().length === 0) {
@@ -20,8 +23,11 @@ export function validateMovieName(name) {
 }
 
 /**
+ * Validates the theatrical release date.
+ * Rule: launchDate is mandatory and must not be blank.
+ *
  * @param {string} launchDate
- * @returns {string | null}
+ * @returns {string | null} Validation message or null when valid.
  */
 export function validateLaunchDate(launchDate) {
   if (typeof launchDate !== "string" || launchDate.trim().length === 0) {
@@ -31,8 +37,11 @@ export function validateLaunchDate(launchDate) {
 }
 
 /**
+ * Validates the runtime in minutes.
+ * Rules: duration is mandatory; must be a finite positive number when provided.
+ *
  * @param {string | number} duration
- * @returns {string | null}
+ * @returns {string | null} Validation message or null when valid.
  */
 export function validateDuration(duration) {
   if (duration === "" || duration === null || duration === undefined) {
@@ -46,8 +55,11 @@ export function validateDuration(duration) {
 }
 
 /**
+ * Validates the MPAA rating.
+ * Rule: value must be one of the entries in {@link VALID_RATINGS}.
+ *
  * @param {string} rating
- * @returns {string | null}
+ * @returns {string | null} Validation message or null when valid.
  */
 export function validateRating(rating) {
   if (!rating || !VALID_RATINGS.includes(rating)) {
@@ -57,8 +69,11 @@ export function validateRating(rating) {
 }
 
 /**
+ * Validates the selected producer.
+ * Rule: a producer must be chosen (non-empty value).
+ *
  * @param {string} producerId
- * @returns {string | null}
+ * @returns {string | null} Validation message or null when valid.
  */
 export function validateProducerId(producerId) {
   if (!producerId || producerId === "") {
@@ -68,8 +83,11 @@ export function validateProducerId(producerId) {
 }
 
 /**
+ * Validates the movie synopsis.
+ * Rule: description is optional, but must not exceed {@link MAX_DESCRIPTION_LENGTH} characters when provided.
+ *
  * @param {string | undefined | null} description
- * @returns {string | null}
+ * @returns {string | null} Validation message or null when valid.
  */
 export function validateDescription(description) {
   if (!description || description.length === 0) {
@@ -85,7 +103,7 @@ export function validateDescription(description) {
  * Validates full movie form data.
  *
  * @param {{ name?: string; launchDate?: string; duration?: string; rating?: string; producerId?: string; description?: string }} values
- * @returns {{ errors: object; isValid: boolean }}
+ * @returns {{ errors: { name?: string; launchDate?: string; duration?: string; rating?: string; producerId?: string; description?: string }; isValid: boolean }}
  */
 export function validateMovieForm(values) {
   const nameError = validateMovieName(values?.name ?? "");
