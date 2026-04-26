@@ -211,6 +211,7 @@ export default function ProducersPage({
           <p className="text-sm text-slate-600">{copy.subtitle}</p>
         </div>
         <Link
+          data-testid="create-producer-button"
           href={`/${lang}/producers/create`}
           className="inline-flex items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 whitespace-nowrap"
         >
