@@ -110,6 +110,15 @@ export type Dictionary = {
       saving: string;
       cancel: string;
       invalidLanguage: string;
+      validation: {
+        nameRequired: string;
+        launchDateRequired: string;
+        durationRequired: string;
+        durationPositive: string;
+        ratingRequired: string;
+        producerRequired: string;
+        descriptionMaxLength: string;
+      };
     };
   };
 };
@@ -220,6 +229,15 @@ const dictionaries: Record<Locale, Dictionary> = {
         saving: "Saving...",
         cancel: "Cancel",
         invalidLanguage: "Invalid language",
+        validation: {
+          nameRequired: "Title is required",
+          launchDateRequired: "Release date is required",
+          durationRequired: "Duration is required",
+          durationPositive: "Duration must be a positive number",
+          ratingRequired: "Please select a rating",
+          producerRequired: "Please select a producer",
+          descriptionMaxLength: "Description must be at most 1000 characters",
+        },
       },
     },
   },
@@ -325,6 +343,15 @@ const dictionaries: Record<Locale, Dictionary> = {
         saving: "Guardando...",
         cancel: "Cancelar",
         invalidLanguage: "Idioma no válido",
+        validation: {
+          nameRequired: "El título es obligatorio",
+          launchDateRequired: "La fecha de estreno es obligatoria",
+          durationRequired: "La duración es obligatoria",
+          durationPositive: "La duración debe ser un número positivo",
+          ratingRequired: "Por favor selecciona una clasificación",
+          producerRequired: "Por favor selecciona un productor",
+          descriptionMaxLength: "La descripción debe tener como máximo 1000 caracteres",
+        },
       },
     },
   },
