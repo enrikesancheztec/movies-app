@@ -105,9 +105,15 @@ export default function Home({
     return (
       <>
         <div className="grid gap-4 p-4 md:hidden">
-          {movies.map((movie) => (
+          {movies.map((movie, index) => {
+            const rowTestId = movie.id === undefined
+              ? `movie-row-no-id-${index}`
+              : `movie-row-${movie.id}`;
+
+            return (
             <article
               key={movie.id}
+              data-testid={rowTestId}
               className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm"
             >
               <div className="space-y-1">
@@ -126,6 +132,7 @@ export default function Home({
                 </div>
 
                 <Link
+                  data-testid="view-movie-details"
                   href={`/${lang}/movies/${movie.id}`}
                   title={`${dict.home.detailsTooltip} ${movie.name}`}
                   aria-label={`${dict.home.detailsTooltip} ${movie.name}`}
@@ -136,7 +143,8 @@ export default function Home({
                 </Link>
               </div>
             </article>
-          ))}
+            );
+          })}
         </div>
 
         <div className="hidden overflow-x-auto md:block">
@@ -156,8 +164,13 @@ export default function Home({
             </thead>
 
             <tbody className="divide-y divide-slate-100 bg-white">
-              {movies.map((movie) => (
-                <tr key={movie.id} className="transition hover:bg-slate-50/80">
+              {movies.map((movie, index) => {
+                const rowTestId = movie.id === undefined
+                  ? `movie-row-no-id-${index}`
+                  : `movie-row-${movie.id}`;
+
+                return (
+                <tr key={movie.id} data-testid={rowTestId} className="transition hover:bg-slate-50/80">
                   <td className="px-4 py-3 text-sm font-medium text-slate-900 lg:px-6 lg:py-4 xl:text-base">
                     {movie.name}
                   </td>
@@ -166,6 +179,7 @@ export default function Home({
                   </td>
                   <td className="px-4 py-3 text-right lg:px-6 lg:py-4">
                     <Link
+                      data-testid="view-movie-details"
                       href={`/${lang}/movies/${movie.id}`}
                       title={`${dict.home.detailsTooltip} ${movie.name}`}
                       aria-label={`${dict.home.detailsTooltip} ${movie.name}`}
@@ -176,7 +190,8 @@ export default function Home({
                     </Link>
                   </td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -197,6 +212,7 @@ export default function Home({
         </div>
 
         <Link
+          data-testid="create-movie-button"
           href={`/${lang}/movies/create`}
           title={dict.home.createMovieTooltip}
           aria-label={dict.home.createMovieTooltip}
@@ -207,7 +223,7 @@ export default function Home({
         </Link>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div data-testid="movies-list" className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         <div className="border-b border-slate-200 px-5 py-4 sm:px-6">
           <h2 className="text-lg font-semibold text-slate-900">{dict.home.featuredTitle}</h2>
         </div>
