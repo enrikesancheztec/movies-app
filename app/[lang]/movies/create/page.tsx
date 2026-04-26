@@ -1,10 +1,20 @@
 "use client";
 
-import { use } from "react";
+import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCreateMovie } from "@/hooks/useCreateMovie";
 import { useProducers } from "@/hooks/useProducers";
 import { MOVIE_RATINGS } from "@/types/movie-rating";
+import {
+  getClientDictionary,
+  locales,
+  type Dictionary,
+  type Locale,
+} from "@/lib/client-dictionaries";
+
+function isSupportedLocale(value: string): value is Locale {
+  return locales.includes(value as Locale);
+}
 
 export default function CreateMoviePage({
   params,
@@ -13,10 +23,34 @@ export default function CreateMoviePage({
 }) {
   const { lang } = use(params);
   const router = useRouter();
+  const [dict, setDict] = useState<Dictionary | null>(null);
   const { values, isSubmitting, setField, submit } = useCreateMovie();
   const { producers, loading: producersLoading } = useProducers();
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const invalidLocale = !isSupportedLocale(lang);
+
+  useEffect(() => {
+    if (!isSupportedLocale(lang)) {
+      return;
+    }
+    getClientDictionary(lang).then((resolvedDict) => {
+      setDict(resolvedDict);
+    });
+  }, [lang]);
+
+  if (!dict) return null;
+
+  if (invalidLocale) {
+    return (
+      <main>
+        <p>{dict.movies.create.invalidLanguage}</p>
+      </main>
+    );
+  }
+
+  const c = dict.movies.create;
+
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     const movie = await submit();
     if (movie) {
@@ -26,21 +60,23 @@ export default function CreateMoviePage({
 
   return (
     <main>
-      <h1>Create Movie</h1>
+      <h1>{c.title}</h1>
+      <p>{c.subtitle}</p>
       <form onSubmit={handleSubmit}>
 
         <div>
-          <label htmlFor="name">Title</label>
+          <label htmlFor="name">{c.nameLabel}</label>
           <input
             id="name"
             type="text"
+            placeholder={c.namePlaceholder}
             value={values.name}
             onChange={(e) => setField("name", e.target.value)}
           />
         </div>
 
         <div>
-          <label htmlFor="launchDate">Release Date</label>
+          <label htmlFor="launchDate">{c.launchDateLabel}</label>
           <input
             id="launchDate"
             type="date"
@@ -50,7 +86,7 @@ export default function CreateMoviePage({
         </div>
 
         <div>
-          <label htmlFor="duration">Duration (min)</label>
+          <label htmlFor="duration">{c.durationLabel}</label>
           <input
             id="duration"
             type="number"
@@ -61,13 +97,13 @@ export default function CreateMoviePage({
         </div>
 
         <div>
-          <label htmlFor="rating">Rating</label>
+          <label htmlFor="rating">{c.ratingLabel}</label>
           <select
             id="rating"
             value={values.rating}
             onChange={(e) => setField("rating", e.target.value)}
           >
-            <option value="">-- Select rating --</option>
+            <option value="">{c.ratingPlaceholder}</option>
             {MOVIE_RATINGS.map((r) => (
               <option key={r} value={r}>{r}</option>
             ))}
@@ -75,7 +111,7 @@ export default function CreateMoviePage({
         </div>
 
         <div>
-          <label htmlFor="producerId">Producer</label>
+          <label htmlFor="producerId">{c.producerLabel}</label>
           <select
             id="producerId"
             value={values.producerId}
@@ -83,7 +119,7 @@ export default function CreateMoviePage({
             onChange={(e) => setField("producerId", e.target.value)}
           >
             <option value="">
-              {producersLoading ? "Loading producers..." : "-- Select producer --"}
+              {producersLoading ? c.producersLoading : c.producerPlaceholder}
             </option>
             {producers.map((p) => (
               <option key={p.id} value={String(p.id)}>{p.name}</option>
@@ -92,20 +128,22 @@ export default function CreateMoviePage({
         </div>
 
         <div>
-          <label htmlFor="description">Description</label>
+          <label htmlFor="description">{c.descriptionLabel}</label>
           <textarea
             id="description"
+            placeholder={c.descriptionPlaceholder}
             value={values.description}
             onChange={(e) => setField("description", e.target.value)}
           />
+          <small>{c.descriptionHelper}</small>
         </div>
 
         <div>
           <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Saving..." : "Save"}
+            {isSubmitting ? c.saving : c.save}
           </button>
           <button type="button" onClick={() => router.push(`/${lang}`)}>
-            Cancel
+            {c.cancel}
           </button>
         </div>
 

@@ -90,6 +90,28 @@ export type Dictionary = {
       };
     };
   };
+  movies: {
+    create: {
+      title: string;
+      subtitle: string;
+      nameLabel: string;
+      namePlaceholder: string;
+      launchDateLabel: string;
+      durationLabel: string;
+      ratingLabel: string;
+      ratingPlaceholder: string;
+      producerLabel: string;
+      producerPlaceholder: string;
+      producersLoading: string;
+      descriptionLabel: string;
+      descriptionPlaceholder: string;
+      descriptionHelper: string;
+      save: string;
+      saving: string;
+      cancel: string;
+      invalidLanguage: string;
+    };
+  };
 };
 
 /**
@@ -178,6 +200,28 @@ const dictionaries: Record<Locale, Dictionary> = {
         },
       },
     },
+    movies: {
+      create: {
+        title: "Create Movie",
+        subtitle: "Fill in the movie details and save when ready.",
+        nameLabel: "Title",
+        namePlaceholder: "Enter movie title",
+        launchDateLabel: "Release Date",
+        durationLabel: "Duration (min)",
+        ratingLabel: "Rating",
+        ratingPlaceholder: "-- Select rating --",
+        producerLabel: "Producer",
+        producerPlaceholder: "-- Select producer --",
+        producersLoading: "Loading producers...",
+        descriptionLabel: "Description",
+        descriptionPlaceholder: "Enter a description (optional)",
+        descriptionHelper: "Optional. Maximum 1000 characters.",
+        save: "Save",
+        saving: "Saving...",
+        cancel: "Cancel",
+        invalidLanguage: "Invalid language",
+      },
+    },
   },
   "es-MX": {
     metadata: {
@@ -259,6 +303,28 @@ const dictionaries: Record<Locale, Dictionary> = {
           nameRequired: "El nombre es obligatorio",
           profileMaxLength: "El perfil debe tener como máximo",
         },
+      },
+    },
+    movies: {
+      create: {
+        title: "Crear Película",
+        subtitle: "Completa los detalles de la película y guarda cuando estés listo.",
+        nameLabel: "Título",
+        namePlaceholder: "Ingresa el título de la película",
+        launchDateLabel: "Fecha de Estreno",
+        durationLabel: "Duración (min)",
+        ratingLabel: "Clasificación",
+        ratingPlaceholder: "-- Selecciona clasificación --",
+        producerLabel: "Productor",
+        producerPlaceholder: "-- Selecciona productor --",
+        producersLoading: "Cargando productores...",
+        descriptionLabel: "Descripción",
+        descriptionPlaceholder: "Ingresa una descripción (opcional)",
+        descriptionHelper: "Opcional. Máximo 1000 caracteres.",
+        save: "Guardar",
+        saving: "Guardando...",
+        cancel: "Cancelar",
+        invalidLanguage: "Idioma no válido",
       },
     },
   },
