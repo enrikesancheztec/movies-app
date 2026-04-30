@@ -90,6 +90,37 @@ export type Dictionary = {
       };
     };
   };
+  movies: {
+    create: {
+      title: string;
+      subtitle: string;
+      nameLabel: string;
+      namePlaceholder: string;
+      launchDateLabel: string;
+      durationLabel: string;
+      ratingLabel: string;
+      ratingPlaceholder: string;
+      producerLabel: string;
+      producerPlaceholder: string;
+      producersLoading: string;
+      descriptionLabel: string;
+      descriptionPlaceholder: string;
+      descriptionHelper: string;
+      save: string;
+      saving: string;
+      cancel: string;
+      invalidLanguage: string;
+      validation: {
+        nameRequired: string;
+        launchDateRequired: string;
+        durationRequired: string;
+        durationPositive: string;
+        ratingRequired: string;
+        producerRequired: string;
+        descriptionMaxLength: string;
+      };
+    };
+  };
 };
 
 /**
@@ -178,6 +209,37 @@ const dictionaries: Record<Locale, Dictionary> = {
         },
       },
     },
+    movies: {
+      create: {
+        title: "Create Movie",
+        subtitle: "Fill in the movie details and save when ready.",
+        nameLabel: "Title",
+        namePlaceholder: "Enter movie title",
+        launchDateLabel: "Release Date",
+        durationLabel: "Duration (min)",
+        ratingLabel: "Rating",
+        ratingPlaceholder: "-- Select rating --",
+        producerLabel: "Producer",
+        producerPlaceholder: "-- Select producer --",
+        producersLoading: "Loading producers...",
+        descriptionLabel: "Description",
+        descriptionPlaceholder: "Enter a description (optional)",
+        descriptionHelper: "Optional. Maximum 1000 characters.",
+        save: "Save",
+        saving: "Saving...",
+        cancel: "Cancel",
+        invalidLanguage: "Invalid language",
+        validation: {
+          nameRequired: "Title is required",
+          launchDateRequired: "Release date is required",
+          durationRequired: "Duration is required",
+          durationPositive: "Duration must be a positive number",
+          ratingRequired: "Please select a rating",
+          producerRequired: "Please select a producer",
+          descriptionMaxLength: "Description must be at most 1000 characters",
+        },
+      },
+    },
   },
   "es-MX": {
     metadata: {
@@ -258,6 +320,37 @@ const dictionaries: Record<Locale, Dictionary> = {
         validation: {
           nameRequired: "El nombre es obligatorio",
           profileMaxLength: "El perfil debe tener como máximo",
+        },
+      },
+    },
+    movies: {
+      create: {
+        title: "Crear Película",
+        subtitle: "Completa los detalles de la película y guarda cuando estés listo.",
+        nameLabel: "Título",
+        namePlaceholder: "Ingresa el título de la película",
+        launchDateLabel: "Fecha de Estreno",
+        durationLabel: "Duración (min)",
+        ratingLabel: "Clasificación",
+        ratingPlaceholder: "-- Selecciona clasificación --",
+        producerLabel: "Productor",
+        producerPlaceholder: "-- Selecciona productor --",
+        producersLoading: "Cargando productores...",
+        descriptionLabel: "Descripción",
+        descriptionPlaceholder: "Ingresa una descripción (opcional)",
+        descriptionHelper: "Opcional. Máximo 1000 caracteres.",
+        save: "Guardar",
+        saving: "Guardando...",
+        cancel: "Cancelar",
+        invalidLanguage: "Idioma no válido",
+        validation: {
+          nameRequired: "El título es obligatorio",
+          launchDateRequired: "La fecha de estreno es obligatoria",
+          durationRequired: "La duración es obligatoria",
+          durationPositive: "La duración debe ser un número positivo",
+          ratingRequired: "Por favor selecciona una clasificación",
+          producerRequired: "Por favor selecciona un productor",
+          descriptionMaxLength: "La descripción debe tener como máximo 1000 caracteres",
         },
       },
     },

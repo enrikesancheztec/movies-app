@@ -114,7 +114,7 @@ export default function CreateProducerPage({
     }
   }, [errors.name, errors.profile, hasSubmitted]);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     setHasSubmitted(true);
     const created = await submit();

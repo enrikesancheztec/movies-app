@@ -45,6 +45,12 @@ export type Movie = {
 
   /**
    * Full description or synopsis of the movie.
+   * Optional. When provided, must not exceed 1000 characters.
    */
-  description: string;
+  description?: string;
+
+  /**
+   * ID of the producer associated with this movie.
+   */
+  producerId?: number;
 };
