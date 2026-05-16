@@ -1,17 +1,12 @@
-import axios, { AxiosInstance, AxiosError } from "axios";
+import type { AxiosInstance, AxiosError } from "axios";
 import type { Movie } from "@/types/movie";
+import { createApiClient } from "@/lib/api/client";
 
 /**
  * Shared Axios client for Movies API requests.
  * Uses the public API base URL configured through environment variables.
  */
-const apiClient: AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  timeout: 5000,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+const apiClient: AxiosInstance = createApiClient();
 
 /**
  * Fetch all movies from the backend API
