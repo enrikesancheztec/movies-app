@@ -20,6 +20,8 @@ This project was created with the following goals:
 
 ## Getting Started
 
+### Local development
+
 Run the development server:
 
 ```bash
@@ -36,6 +38,8 @@ Example (`.env.local`):
 NEXT_PUBLIC_API_BASE_URL=http://localhost:8080/api
 ```
 
+This value is read from the local environment while running `npm run dev`.
+
 The application currently includes localized routes such as:
 
 - [http://localhost:3000/en-US](http://localhost:3000/en-US)
@@ -45,6 +49,41 @@ Movie detail routes follow the pattern:
 
 - `http://localhost:3000/en-US/movies/{id}`
 - `http://localhost:3000/es-MX/movies/{id}`
+
+## Docker
+
+The project includes a production Docker image based on the Next.js standalone output.
+
+Build the image by providing the backend API URL as a build argument:
+
+```bash
+docker build \
+	--build-arg NEXT_PUBLIC_API_BASE_URL=http://localhost:8080 \
+	-t movies-app .
+```
+
+Run the container locally:
+
+```bash
+docker run --rm -p 3000:3000 movies-app
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+Important: `NEXT_PUBLIC_API_BASE_URL` is embedded into the frontend bundle during `docker build`.
+Changing that variable when starting the container will not change the API target for an already built image.
+If you need a different backend URL, build a new image with a different `--build-arg` value.
+
+Optional runtime variables for the container:
+
+- `PORT` to change the internal listening port.
+- `HOSTNAME` to override the bind host if needed.
+
+Example with an explicit runtime port:
+
+```bash
+docker run --rm -p 3000:3000 -e PORT=3000 movies-app
+```
 
 ## Tech Stack
 
